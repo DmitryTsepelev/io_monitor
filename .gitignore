@@ -9,3 +9,10 @@
 
 # rspec failure tracking
 .rspec_status
+
+.ruby-version
+Gemfile.lock
+Gemfile.local
+
+spec/dummy/log/*.log
+spec/dummy/tmp/
