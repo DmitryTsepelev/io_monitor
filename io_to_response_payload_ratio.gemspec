@@ -29,6 +29,10 @@ Gem::Specification.new do |spec|
   spec.add_dependency "railties", rails_version
 
   spec.add_development_dependency "rake", "~> 13.0"
-  spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "rspec-rails", ">= 3.4"
   spec.add_development_dependency "standard", "~> 1.3"
+  spec.add_development_dependency "simplecov", "~> 0.21.2"
+  spec.add_development_dependency "simplecov-cobertura", "~> 2.0.0"
+  spec.add_development_dependency "sqlite3", "~> 1.4.2"
+  spec.add_development_dependency "rails", rails_version
 end
