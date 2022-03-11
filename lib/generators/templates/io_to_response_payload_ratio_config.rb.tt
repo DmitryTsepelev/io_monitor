@@ -1,0 +1,9 @@
+require 'io_to_response_payload_ratio'
+
+IoToResponsePayloadRatio.configure do |config|
+  # Threshold for I/O to response payload ratio
+  # config.warn_threshold = <%= IoToResponsePayloadRatio.warn_threshold %>
+
+  # Publish type
+  # config.publish = <%= IoToResponsePayloadRatio.publish.inspect %>
+end
