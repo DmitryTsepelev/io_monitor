@@ -11,6 +11,7 @@ if ENV["CI"] == "true"
   SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
 end
 
+require "active_record"
 require "io_to_response_payload_ratio"
 
 ENV["RAILS_ENV"] = "test"
@@ -28,3 +29,10 @@ RSpec.configure do |config|
 
   config.include TestHelpers
 end
+
+ActiveRecord::Base.establish_connection(
+  adapter: "sqlite3",
+  database: ":memory:"
+)
+
+load "#{Rails.root}/db/schema.rb"
