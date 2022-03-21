@@ -1,7 +1,6 @@
 # frozen_string_literal: true
-#
-#require_relative "io_to_response_payload_ratio/railtie"
-require "active_record/log_subscriber"
+
+require_relative "io_to_response_payload_ratio/configuration"
 require_relative "io_to_response_payload_ratio/railtie"
 require_relative "io_to_response_payload_ratio/measure_memory"
 require_relative "io_to_response_payload_ratio/allocated_memory_registry"
@@ -9,9 +8,22 @@ require_relative "io_to_response_payload_ratio/db/measure"
 
 module IoToResponsePayloadRatio
   class Error < StandardError; end
-  # Your code goes here...
-  #
 
+  class << self
+    attr_writer :configuration
+
+    def configuration
+      @configuration ||= Configuration.new
+    end
+
+    def reset
+      @configuration = Configuration.new
+    end
+
+    def configure
+      yield(configuration)
+    end
+  end
 end
 
 class << ActiveRecord::LogSubscriber
