@@ -10,3 +10,5 @@ gem "rake", "~> 13.0"
 gem "rspec", "~> 3.0"
 
 gem "standard", "~> 1.3"
+
+gem 'get_process_mem', '~> 0.2.7'
