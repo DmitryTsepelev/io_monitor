@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 require_relative "io_to_response_payload_ratio/version"
+require_relative "io_to_response_payload_ratio/controller_runtime"
 
 module IoToResponsePayloadRatio
   class Error < StandardError; end
+
+  include ControllerRuntime
 
   PUBLISH_OPTIONS = %i[logs notifications].freeze
 
@@ -28,6 +31,14 @@ module IoToResponsePayloadRatio
 
     def configure
       yield self
+    end
+
+    def logs?
+      publish == :logs
+    end
+
+    def notifications?
+      publish == :notifications
     end
   end
 

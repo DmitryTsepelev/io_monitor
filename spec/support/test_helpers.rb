@@ -12,4 +12,8 @@ module TestHelpers
   def file_content(path)
     IO.binread path
   end
+
+  def json
+    JSON.parse response.body
+  end
 end
