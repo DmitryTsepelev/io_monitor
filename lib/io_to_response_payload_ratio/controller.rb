@@ -1,5 +1,3 @@
-require "io_to_response_payload_ratio/controller_runtime"
-
 module IoToResponsePayloadRatio
   module Controller
     extend ActiveSupport::Concern
@@ -9,7 +7,8 @@ module IoToResponsePayloadRatio
 
       if IoToResponsePayloadRatio.logs?
         payload[:io_to_response_payload_ratio] = {
-          body_bytes: payload[:response]&.body&.bytesize || 0
+          body_bytes: payload[:response]&.body&.bytesize || 0,
+          db_bytes: (db_bytes || 0) + IoToResponsePayloadRatio::LogSubscriber.reset_db_payload
         }
       end
     end

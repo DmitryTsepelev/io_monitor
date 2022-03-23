@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 require_relative "io_to_response_payload_ratio/version"
-require_relative "io_to_response_payload_ratio/controller_runtime"
+require_relative "io_to_response_payload_ratio/patches/action_controller_patch"
+require_relative "io_to_response_payload_ratio/patches/active_record_patch"
+require_relative "io_to_response_payload_ratio/log_subscriber"
+require_relative "io_to_response_payload_ratio/database_payload_registry"
 
 module IoToResponsePayloadRatio
   class Error < StandardError; end
-
-  include ControllerRuntime
 
   PUBLISH_OPTIONS = %i[logs notifications].freeze
 

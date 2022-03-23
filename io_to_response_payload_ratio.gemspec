@@ -25,7 +25,8 @@ Gem::Specification.new do |spec|
   spec.files = Dir["lib/**/*"] + %w[README.md LICENSE.txt CHANGELOG.md]
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "rails", ">= 6.0"
+  rails_version = ">= 6.0"
+  spec.add_dependency "rails", rails_version
 
   spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "rspec-rails", ">= 3.4"
