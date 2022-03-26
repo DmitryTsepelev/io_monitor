@@ -1,22 +1,24 @@
+# frozen_string_literal: true
+
 require "active_support/core_ext/module/attr_internal"
 require "active_record/log_subscriber"
 
 module IoToResponsePayloadRatio
   module Railties # :nodoc:
-    module ControllerDbAllocatedMemory #:nodoc:
+    module ControllerDbPayloadSize #:nodoc:
       extend ActiveSupport::Concern
 
       module ClassMethods # :nodoc:
         def log_process_action(payload)
-          messages, db_allocated_memory = super, payload[:db_allocated_memory]
-          messages << ("DB Payload: %.1fkb" % db_allocated_memory.to_f) if db_allocated_memory
+          messages, db_payload_size = super, payload[:db_payload_size]
+          messages << ("DB Payload: %.1fkb" % db_payload_size.to_f) if db_payload_size
           messages
         end
       end
 
       private
 
-      attr_internal :db_allocated_memory
+      attr_internal :db_payload_size
 
       def process_action(action, *args)
         ActiveRecord::LogSubscriber.reset_allocated_memory
@@ -28,7 +30,7 @@ module IoToResponsePayloadRatio
         super
 
         if ActiveRecord::Base.connected?
-          payload[:db_allocated_memory] = (db_allocated_memory || 0) + ActiveRecord::LogSubscriber.reset_allocated_memory
+          payload[:db_payload_size] = (db_payload_size || 0) + ActiveRecord::LogSubscriber.reset_allocated_memory
         end
       end
     end
