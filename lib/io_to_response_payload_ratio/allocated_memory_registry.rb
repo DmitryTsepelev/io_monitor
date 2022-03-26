@@ -4,7 +4,7 @@ module IoToResponsePayloadRatio
   class AllocatedMemoryRegistry
     extend ActiveSupport::PerThreadRegistry
 
-    METHODS = %i[db_allocated_memory]
+    METHODS = %i[db_payload_size]
 
     attr_accessor *METHODS
 

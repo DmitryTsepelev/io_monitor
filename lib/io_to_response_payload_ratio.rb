@@ -5,6 +5,7 @@ require_relative "io_to_response_payload_ratio/railtie"
 require_relative "io_to_response_payload_ratio/measure_memory"
 require_relative "io_to_response_payload_ratio/allocated_memory_registry"
 require_relative "io_to_response_payload_ratio/db/measure"
+require_relative "io_to_response_payload_ratio/extensions/process_action_with_response"
 
 module IoToResponsePayloadRatio
   class Error < StandardError; end
@@ -24,16 +25,23 @@ module IoToResponsePayloadRatio
       yield(configuration)
     end
   end
+
+  module Controller
+
+  end
 end
 
 class << ActiveRecord::LogSubscriber
-  def allocated_memory
-    IoToResponsePayloadRatio::AllocatedMemoryRegistry.db_allocated_memory ||= 0
+  def db_payload_size
+    IoToResponsePayloadRatio::AllocatedMemoryRegistry.db_payload_size ||= 0
   end
 
-  def allocated_memory=(value)
-    IoToResponsePayloadRatio::AllocatedMemoryRegistry.db_allocated_memory ||= 0
-    IoToResponsePayloadRatio::AllocatedMemoryRegistry.db_allocated_memory += value
+  def append_db_payload_size=(value)
+    self.db_payload_size = db_payload_size + value
+  end
+
+  def db_payload_size=(value)
+    IoToResponsePayloadRatio::AllocatedMemoryRegistry.db_payload_size = value
   end
 
   def reset_allocated_memory
