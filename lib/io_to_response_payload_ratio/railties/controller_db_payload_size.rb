@@ -21,7 +21,7 @@ module IoToResponsePayloadRatio
       attr_internal :db_payload_size
 
       def process_action(action, *args)
-        ActiveRecord::LogSubscriber.reset_allocated_memory
+        ActiveRecord::LogSubscriber.reset_db_payload_size
 
         super
       end
@@ -30,7 +30,7 @@ module IoToResponsePayloadRatio
         super
 
         if ActiveRecord::Base.connected?
-          payload[:db_payload_size] = (db_payload_size || 0) + ActiveRecord::LogSubscriber.reset_allocated_memory
+          payload[:db_payload_size] = (db_payload_size || 0) + ActiveRecord::LogSubscriber.reset_db_payload_size
         end
       end
     end
