@@ -16,4 +16,8 @@ module TestHelpers
   def json
     JSON.parse response.body
   end
+
+  def products_attrs(count = 10)
+    count.times.map { |i| {id: i, name: i.to_s} }
+  end
 end

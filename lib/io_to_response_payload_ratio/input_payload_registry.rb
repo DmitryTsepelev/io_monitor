@@ -66,15 +66,15 @@ module IoToResponsePayloadRatio
     self.isolation_level = :thread
   end
 
-  module DatabasePayloadRegistry
+  module InputPayloadRegistry
     extend self
 
     def payload
-      IsolatedExecutionState[:active_record_db_payload]
+      IsolatedExecutionState[:controller_input_payload]
     end
 
     def payload=(payload)
-      IsolatedExecutionState[:active_record_db_payload] = payload
+      IsolatedExecutionState[:controller_input_payload] = payload
     end
   end
 end

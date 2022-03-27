@@ -4,7 +4,7 @@ require_relative "io_to_response_payload_ratio/version"
 require_relative "io_to_response_payload_ratio/patches/action_controller_patch"
 require_relative "io_to_response_payload_ratio/patches/active_record_patch"
 require_relative "io_to_response_payload_ratio/log_subscriber"
-require_relative "io_to_response_payload_ratio/database_payload_registry"
+require_relative "io_to_response_payload_ratio/input_payload_registry"
 
 module IoToResponsePayloadRatio
   class Error < StandardError; end
@@ -40,6 +40,16 @@ module IoToResponsePayloadRatio
 
     def notifications?
       publish == :notifications
+    end
+
+    def check_treshold(logger, input_payload, body_payload)
+      ratio = input_payload.positive? ? (body_payload / input_payload.to_f).round(2) : 0
+
+      if ratio < warn_threshold
+        logger.warn(
+          "I/O to response payload ratio is #{ratio} while threshold is #{warn_threshold}"
+        )
+      end
     end
   end
 
