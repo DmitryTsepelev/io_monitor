@@ -41,7 +41,7 @@ module IoToResponsePayloadRatio
 
           obj = ::IoToResponsePayloadRatio::MeasurePayloadSize.new(&block)
 
-          ::ActiveRecord::LogSubscriber.append_db_payload_size = obj.allocated_memory_in_kb
+          ::ActiveRecord::LogSubscriber.append_db_payload_size = obj.payload_size_in_kb
 
           obj.result
         end

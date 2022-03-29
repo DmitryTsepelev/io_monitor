@@ -37,7 +37,7 @@ module IoToResponsePayloadRatio
         return super unless data.key?(:json)
 
         self.response_payload_size =
-          IoToResponsePayloadRatio::MeasurePayloadSize.new(data[:json]).allocated_memory_in_kb
+          IoToResponsePayloadRatio::MeasurePayloadSize.new(data[:json]).payload_size_in_kb
 
         super
       end
