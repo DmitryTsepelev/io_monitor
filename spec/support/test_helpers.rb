@@ -24,4 +24,8 @@ module TestHelpers
   def controller_route_name(controller)
     controller.class.name.underscore.split("_")[0...-1].join("_")
   end
+
+  def setup_log_subscriber(logger)
+    allow_any_instance_of(IoToResponsePayloadRatio::LogSubscriber).to receive(:logger).and_return logger
+  end
 end

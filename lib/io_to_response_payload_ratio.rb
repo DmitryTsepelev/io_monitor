@@ -43,10 +43,10 @@ module IoToResponsePayloadRatio
       publish == :notifications
     end
 
-    def check_treshold(logger, input_payload, body_payload)
-      return unless input_payload.positive?
+    def check_threshold(logger:, input:, body:)
+      return unless input.positive?
 
-      ratio = (body_payload / input_payload.to_f).round(2)
+      ratio = (body / input.to_f).round(2)
 
       if ratio < warn_threshold
         logger.warn(

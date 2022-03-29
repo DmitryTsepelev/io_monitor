@@ -16,6 +16,12 @@ module IoToResponsePayloadRatio
     def db_result(event)
       self.class.input_payload += event.payload[:db_payload]
     end
+
+    def measurements(event)
+      input, body = event.payload.values_at :input_payload, :body_payload
+
+      IoToResponsePayloadRatio.check_threshold logger: logger, input: input, body: body
+    end
   end
 end
 

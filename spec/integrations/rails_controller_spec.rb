@@ -32,15 +32,13 @@ class WithoutMetricsController < ActionController::Base
   include FakeControllerBehaviour
 end
 
-if defined?(ActionController::API)
-  class WithMetricsApiController < ActionController::API
-    include IoToResponsePayloadRatio::Controller
-    include FakeControllerBehaviour
-  end
+class WithMetricsApiController < ActionController::API
+  include IoToResponsePayloadRatio::Controller
+  include FakeControllerBehaviour
+end
 
-  class WithoutMetricsApiController < ActionController::API
-    include FakeControllerBehaviour
-  end
+class WithoutMetricsApiController < ActionController::API
+  include FakeControllerBehaviour
 end
 
 RSpec.describe "Rails controller integration", type: :controller do
@@ -54,7 +52,9 @@ RSpec.describe "Rails controller integration", type: :controller do
     end
 
     before do
-      ActionController::Base.logger = Logger.new log
+      logger = Logger.new log
+      ActionController::Base.logger = logger
+      setup_log_subscriber logger
 
       IoToResponsePayloadRatio.publish = publish_type
       IoToResponsePayloadRatio.warn_threshold = warn_threshold
@@ -90,11 +90,11 @@ RSpec.describe "Rails controller integration", type: :controller do
         end
 
         it "displays body size" do
-          expect(log.string).to include "Body: #{"%.2f" % (body_bytes / 1000.0)}kB"
+          expect(log.string).to include "Body: #{"%.3f" % (body_bytes / 1000.0)}kB"
         end
 
         it "displays input payload size" do
-          expect(log.string).to include "Input Payload: #{"%.2f" % (db_bytes / 1000.0)}kB"
+          expect(log.string).to include "Input Payload: #{"%.3f" % (db_bytes / 1000.0)}kB"
         end
 
         it "doesn't display warn" do
@@ -144,7 +144,9 @@ RSpec.describe "Rails controller integration", type: :controller do
     let(:log) { StringIO.new }
 
     before do
-      ActionController::Base.logger = Logger.new log
+      logger = Logger.new log
+      ActionController::Base.logger = logger
+      setup_log_subscriber logger
 
       controller_route = controller_route_name(controller)
       routes.draw { get "index" => "#{controller_route}#index" }
@@ -181,13 +183,11 @@ RSpec.describe "Rails controller integration", type: :controller do
     include_examples "without metrics"
   end
 
-  if defined?(ActionController::API)
-    describe WithMetricsApiController do
-      include_examples "with metrics"
-    end
+  describe WithMetricsApiController do
+    include_examples "with metrics"
+  end
 
-    describe WithoutMetricsApiController do
-      include_examples "without metrics"
-    end
+  describe WithoutMetricsApiController do
+    include_examples "without metrics"
   end
 end
