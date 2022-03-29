@@ -28,7 +28,7 @@ module IoToResponsePayloadRatio
         end
       end
 
-      # Check for render json
+      # Check for rendering json
       def render(*args)
         return super if !args.is_a?(Array) || !args[0].is_a?(Hash)
 
@@ -36,7 +36,8 @@ module IoToResponsePayloadRatio
 
         return super unless data.key?(:json)
 
-        self.response_payload_size = IoToResponsePayloadRatio::MeasurePayloadSize.new(data[:json]).allocated_memory_in_kb
+        self.response_payload_size =
+          IoToResponsePayloadRatio::MeasurePayloadSize.new(data[:json]).allocated_memory_in_kb
 
         super
       end

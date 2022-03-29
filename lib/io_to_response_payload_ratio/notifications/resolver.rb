@@ -13,7 +13,7 @@ module IoToResponsePayloadRatio
       attr_reader :payload, :ratio, :configuration
 
       def initialize(payload:, ratio:)
-        @payload = payload || {}
+        @payload = payload
         @ratio = ratio.to_f
         @configuration = IoToResponsePayloadRatio.configuration
       end
