@@ -1,22 +1,22 @@
 # frozen_string_literal: true
 
-require "simplecov"
+require 'simplecov'
 
 SimpleCov.start do
-  add_filter "spec/"
+  add_filter 'spec/'
 end
 
-if ENV["CI"] == "true"
-  require "simplecov-cobertura"
+if ENV['CI'] == 'true'
+  require 'simplecov-cobertura'
   SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
 end
 
-require "active_record"
-require "io_to_response_payload_ratio"
+require 'active_record'
+require 'io_to_response_payload_ratio'
 
-ENV["RAILS_ENV"] = "test"
+ENV['RAILS_ENV'] = 'test'
 
-require_relative "./dummy/config/environment"
+require_relative './dummy/config/environment'
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].sort.each { |f| require f }
 
@@ -31,8 +31,8 @@ RSpec.configure do |config|
 end
 
 ActiveRecord::Base.establish_connection(
-  adapter: "sqlite3",
-  database: ":memory:"
+  adapter: 'sqlite3',
+  database: ':memory:'
 )
 
 load "#{Rails.root}/db/schema.rb"

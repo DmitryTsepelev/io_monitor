@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module IoToResponsePayloadRatio
   module ActionControllerPatch
     extend ActiveSupport::Concern
@@ -8,11 +10,13 @@ module IoToResponsePayloadRatio
 
         return super unless custom_payload
 
-        messages, body_payload, input_payload = super, custom_payload[:body_payload], custom_payload[:input_payload]
+        messages = super
+        body_payload = custom_payload[:body_payload]
+        input_payload = custom_payload[:input_payload]
 
         if IoToResponsePayloadRatio.logs?
-          messages << "Input Payload: #{"%.3f" % (input_payload / 1000.0)}kB"
-          messages << "Body: #{"%.3f" % (body_payload / 1000.0)}kB"
+          messages << "Input Payload: #{format('%.3f', (input_payload / 1000.0))}kB"
+          messages << "Body: #{format('%.3f', (body_payload / 1000.0))}kB"
         end
 
         messages

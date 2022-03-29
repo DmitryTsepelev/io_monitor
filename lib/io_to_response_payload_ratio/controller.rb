@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module IoToResponsePayloadRatio
   module Controller
     extend ActiveSupport::Concern
@@ -14,7 +16,7 @@ module IoToResponsePayloadRatio
       }
 
       ActiveSupport::Notifications.instrument(
-        "measurements.io_to_response_payload_ratio",
+        'measurements.io_to_response_payload_ratio',
         body_payload: body_payload,
         input_payload: input_payload,
         controller_payload: payload

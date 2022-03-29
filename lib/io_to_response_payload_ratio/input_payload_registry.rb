@@ -1,4 +1,6 @@
-require "fiber"
+# frozen_string_literal: true
+
+require 'fiber'
 
 module IoToResponsePayloadRatio
   # Implementation from https://github.com/rails/rails/blob/main/activesupport/lib/active_support/isolated_execution_state.rb
@@ -21,9 +23,9 @@ module IoToResponsePayloadRatio
         clear if @isolation_level
 
         @scope = case level
-          when :thread then Thread
-          when :fiber then Fiber
-        end
+                 when :thread then Thread
+                 when :fiber then Fiber
+                 end
 
         @isolation_level = level
       end
@@ -67,7 +69,7 @@ module IoToResponsePayloadRatio
   end
 
   module InputPayloadRegistry
-    extend self
+    module_function
 
     def payload
       IsolatedExecutionState[:controller_input_payload]

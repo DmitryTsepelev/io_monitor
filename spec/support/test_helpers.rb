@@ -1,4 +1,6 @@
-require "fileutils"
+# frozen_string_literal: true
+
+require 'fileutils'
 
 module TestHelpers
   def config_file
@@ -10,7 +12,7 @@ module TestHelpers
   end
 
   def file_content(path)
-    IO.binread path
+    File.binread path
   end
 
   def json
@@ -18,11 +20,11 @@ module TestHelpers
   end
 
   def products_attrs(count = 10)
-    count.times.map { |i| {id: i, name: i.to_s} }
+    Array.new(count) { |i| { id: i, name: i.to_s } }
   end
 
   def controller_route_name(controller)
-    controller.class.name.underscore.split("_")[0...-1].join("_")
+    controller.class.name.underscore.split('_')[0...-1].join('_')
   end
 
   def setup_log_subscriber(logger)

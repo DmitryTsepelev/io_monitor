@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module IoToResponsePayloadRatio
   class LogSubscriber < ActiveSupport::LogSubscriber
     def self.input_payload=(value)
@@ -9,7 +11,8 @@ module IoToResponsePayloadRatio
     end
 
     def self.reset_input_payload
-      payload, self.input_payload = input_payload, 0
+      payload = input_payload
+      self.input_payload = 0
       payload
     end
 
