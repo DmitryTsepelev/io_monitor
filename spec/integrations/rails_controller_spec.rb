@@ -4,7 +4,7 @@ module FakeControllerBehaviour
   def index
     @products = Product.all
 
-    render json: {products: @products}
+    render json: action_response
   end
 
   def threshold
@@ -17,6 +17,10 @@ module FakeControllerBehaviour
   def query_result
     ActiveRecord::Base.connection.exec_query @products.to_sql
   end
+
+  def action_response
+    {products: @products}
+  end
 end
 
 class WithMetricsController < ActionController::Base
@@ -28,35 +32,37 @@ class WithoutMetricsController < ActionController::Base
   include FakeControllerBehaviour
 end
 
+if defined?(ActionController::API)
+  class WithMetricsApiController < ActionController::API
+    include IoToResponsePayloadRatio::Controller
+    include FakeControllerBehaviour
+  end
+
+  class WithoutMetricsApiController < ActionController::API
+    include FakeControllerBehaviour
+  end
+end
+
 RSpec.describe "Rails controller integration", type: :controller do
-  let(:log) { StringIO.new }
-  let(:db_bytes) do
-    res = controller.query_result
-    res.columns.join.bytesize + res.rows.map(&:join).join.bytesize
-  end
-
-  before :all do
-    attrs = products_attrs
-    Product.create attrs
-
-    @products_response = {products: attrs}.to_json
-    @body_bytes = @products_response.bytesize
-  end
-
-  before do
-    ActionController::Base.logger = Logger.new log
-  end
-
-  describe WithMetricsController do
+  shared_examples "with metrics" do
+    let(:log) { StringIO.new }
     let(:warn_threshold) { 0.5 }
+    let(:body_bytes) { controller.action_response.to_json.bytesize }
+    let(:db_bytes) do
+      res = controller.query_result
+      res.columns.join.bytesize + res.rows.map(&:join).join.bytesize
+    end
 
     before do
+      ActionController::Base.logger = Logger.new log
+
       IoToResponsePayloadRatio.publish = publish_type
       IoToResponsePayloadRatio.warn_threshold = warn_threshold
 
+      controller_route = controller_route_name(controller)
       routes.draw do
-        get "index" => "with_metrics#index"
-        get "threshold" => "with_metrics#threshold"
+        get "index" => "#{controller_route}#index"
+        get "threshold" => "#{controller_route}#threshold"
       end
 
       @measurements = nil
@@ -69,7 +75,7 @@ RSpec.describe "Rails controller integration", type: :controller do
       ActiveSupport::Notifications.unsubscribe(@subscriber)
     end
 
-    context "without threshold warning" do
+    context "when I/O to response ratio is acceptable" do
       before { get :index }
 
       context "when logs publish type" do
@@ -80,11 +86,11 @@ RSpec.describe "Rails controller integration", type: :controller do
         end
 
         it "returns products list" do
-          expect(response.body).to eq(@products_response)
+          expect(response.body).to eq(controller.action_response.to_json)
         end
 
         it "displays body size" do
-          expect(log.string).to include "Body: #{"%.2f" % (@body_bytes / 1000.0)}kB"
+          expect(log.string).to include "Body: #{"%.2f" % (body_bytes / 1000.0)}kB"
         end
 
         it "displays input payload size" do
@@ -100,16 +106,16 @@ RSpec.describe "Rails controller integration", type: :controller do
         let(:publish_type) { :notifications }
 
         it "doesn't display body size" do
-          expect(log.string).not_to include "| Body:"
+          expect(log.string).not_to include "Body:"
         end
 
         it "doesn't display input payload size" do
-          expect(log.string).not_to include "| Input Payload:"
+          expect(log.string).not_to include "Input Payload:"
         end
 
         it "sends a notification with measurement values" do
           expect(@measurements.fetch(:input_payload)).to eq db_bytes
-          expect(@measurements.fetch(:body_payload)).to eq @body_bytes
+          expect(@measurements.fetch(:body_payload)).to eq body_bytes
         end
 
         it "doesn't display warn" do
@@ -134,9 +140,14 @@ RSpec.describe "Rails controller integration", type: :controller do
     end
   end
 
-  describe WithoutMetricsController do
+  shared_examples "without metrics" do
+    let(:log) { StringIO.new }
+
     before do
-      routes.draw { get "index" => "without_metrics#index" }
+      ActionController::Base.logger = Logger.new log
+
+      controller_route = controller_route_name(controller)
+      routes.draw { get "index" => "#{controller_route}#index" }
 
       get :index
     end
@@ -146,7 +157,7 @@ RSpec.describe "Rails controller integration", type: :controller do
     end
 
     it "returns products list" do
-      expect(response.body).to eq(@products_response)
+      expect(response.body).to eq(controller.action_response.to_json)
     end
 
     it "doesn't display body size" do
@@ -154,7 +165,29 @@ RSpec.describe "Rails controller integration", type: :controller do
     end
 
     it "doesn't display input payload size" do
-      expect(log.string).not_to include "| Input Payload:"
+      expect(log.string).not_to include "Input Payload:"
+    end
+  end
+
+  before :all do
+    Product.create products_attrs
+  end
+
+  describe WithMetricsController do
+    include_examples "with metrics"
+  end
+
+  describe WithoutMetricsController do
+    include_examples "without metrics"
+  end
+
+  if defined?(ActionController::API)
+    describe WithMetricsApiController do
+      include_examples "with metrics"
+    end
+
+    describe WithoutMetricsApiController do
+      include_examples "without metrics"
     end
   end
 end

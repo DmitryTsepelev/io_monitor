@@ -20,4 +20,8 @@ module TestHelpers
   def products_attrs(count = 10)
     count.times.map { |i| {id: i, name: i.to_s} }
   end
+
+  def controller_route_name(controller)
+    controller.class.name.underscore.split("_")[0...-1].join("_")
+  end
 end
