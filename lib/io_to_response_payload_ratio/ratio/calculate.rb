@@ -3,7 +3,7 @@
 module IoToResponsePayloadRatio
   module Ratio
     class Calculate
-      POSITIVE_RATIO = 1
+      MAX_POSITIVE_RATIO = 1
 
       attr_reader :ratio
 
@@ -19,14 +19,18 @@ module IoToResponsePayloadRatio
 
       def calculated_ratio
         if source_payload_size.zero? && response_payload_size.zero?
-          return POSITIVE_RATIO
+          return MAX_POSITIVE_RATIO
         end
 
         if source_payload_size.zero?
-          return POSITIVE_RATIO
+          return MAX_POSITIVE_RATIO
         end
 
-        response_payload_size / source_payload_size
+        result = response_payload_size / source_payload_size
+
+        result = MAX_POSITIVE_RATIO if result > MAX_POSITIVE_RATIO
+
+        result
       end
     end
   end
