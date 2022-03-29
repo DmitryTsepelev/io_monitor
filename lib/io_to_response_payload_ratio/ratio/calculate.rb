@@ -18,11 +18,6 @@ module IoToResponsePayloadRatio
       attr_reader :response_payload_size, :source_payload_size
 
       def calculated_ratio
-        puts 'BEFORE &&&&&&&&&&&&&&&&&&'
-        puts 'BEFORE &&&&&&&&&&&&&&&&&&'
-        puts 'BEFORE &&&&&&&&&&&&&&&&&&'
-        puts 'BEFORE &&&&&&&&&&&&&&&&&&'
-        puts "source_payload_size - #{source_payload_size}, response_payload_size - #{response_payload_size}"
         if source_payload_size.zero? && response_payload_size.zero?
           return POSITIVE_RATIO
         end
@@ -30,8 +25,6 @@ module IoToResponsePayloadRatio
         if source_payload_size.zero?
           return POSITIVE_RATIO
         end
-
-        puts '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 
         response_payload_size / source_payload_size
       end
