@@ -23,13 +23,19 @@ module IoToResponsePayloadRatio
 
         payload[:ratio_message] = build_message
 
-        notification_by_type(configuration.publish).new(payload: payload, ratio: ratio).call
+        notification_by_type.new(payload: payload, ratio: ratio).call
       end
 
       private
 
-      def notification_by_type(publish_type)
-        "IoToResponsePayloadRatio::Notifications::#{publish_type.to_s.camelize}".constantize
+      def notification_by_type
+        notification = configuration.current_notification
+
+        if notification.is_a?(String)
+          notification = Object.const_get(notification)
+        end
+
+        notification
       end
 
       def build_message

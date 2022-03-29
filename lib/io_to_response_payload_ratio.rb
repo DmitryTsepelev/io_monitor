@@ -10,7 +10,7 @@ module IoToResponsePayloadRatio
   class Error < StandardError; end
 
   class << self
-    attr_writer :configuration
+    attr_reader :notifications
 
     def configuration
       @configuration ||= Configuration.new
@@ -22,6 +22,10 @@ module IoToResponsePayloadRatio
 
     def configure
       yield(configuration)
+    end
+
+    def notifications
+      configuration.available_notifications
     end
   end
 
