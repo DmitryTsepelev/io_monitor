@@ -33,36 +33,13 @@ module IoToResponsePayloadRatio
         end
 
         def self.measuring_method(&block)
-          puts 'MEASUREING BLOCK !!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-          puts 'MEASUREING BLOCK !!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-          puts 'MEASUREING BLOCK !!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-          puts 'MEASUREING BLOCK !!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-          puts 'MEASUREING BLOCK !!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-          puts 'MEASUREING BLOCK !!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-
           caller_method = caller_locations(2,1)[0].base_label
-
-          puts "CALLER METHOD"
-          puts caller_method.inspect
 
           if !defined?(::IoToResponsePayloadRatio::MeasurePayloadSize) || IGNORE_CALLER_METHODS.include?(caller_method)
             return block.call
           end
 
           obj = ::IoToResponsePayloadRatio::MeasurePayloadSize.new(&block)
-
-          puts 'ALLOCATED TRACE HERE {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{'
-          puts 'ALLOCATED TRACE HERE {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{'
-          puts 'ALLOCATED TRACE HERE {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{'
-          puts 'ALLOCATED TRACE HERE {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{'
-          puts 'ALLOCATED TRACE HERE {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{'
-          puts 'ALLOCATED TRACE HERE {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{'
-          puts 'ALLOCATED TRACE HERE {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{'
-          puts 'ALLOCATED TRACE HERE {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{'
-          puts 'ALLOCATED TRACE HERE {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{'
-          #puts obj.inspect
-          puts obj.allocated_memory_in_kb
-          puts "ALLOCATED MEMORY IN KB allocated_memory_in_kb = #{obj.allocated_memory_in_kb}"
 
           ::ActiveRecord::LogSubscriber.append_db_payload_size = obj.allocated_memory_in_kb
 
@@ -73,33 +50,7 @@ module IoToResponsePayloadRatio
       module Relation
         def records
           Measure.measuring_method { super }
-
-          #   loaded_records = super
-          #
-          #   ::ActiveRecord::LogSubscriber.append_allocated_memory = ObjectSpace.memsize_of(loaded_records) / 1024
-          #
-          #   puts '=================================='
-          #   puts '=================================='
-          #   puts '=================================='
-          #   puts '=================================='
-          #   puts '=================================='
-          #   puts '=================================='
-          #   puts '=================================='
-          #   puts '=================================='
-          #   puts loaded_records.inspect
-          #
-          #   loaded_records
         end
-
-        private
-
-        # def exec_queries(&block)
-        #   Measure.measuring_method { super }
-        # end
-
-        # def skip_query_cache_if_necessary
-
-        # end
       end
 
       module Calculations
