@@ -33,5 +33,4 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "rails", ">= 6.0"
   spec.add_dependency "concurrent-ruby", "~> 1.0"
-  spec.add_dependency "filesize", "~> 0.2.0"
 end

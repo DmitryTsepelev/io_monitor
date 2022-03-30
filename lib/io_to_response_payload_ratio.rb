@@ -14,8 +14,9 @@ module IoToResponsePayloadRatio
 
   class << self
     def aggregator
-      sources = ADAPTERS.select(&:enabled?).map(&:kind)
-      @aggregator ||= Aggregator.new(sources)
+      @aggregator ||= Aggregator.new(
+        ADAPTERS.filter_map { |adapter| adapter.kind if adapter.enabled? }
+      )
     end
 
     def config

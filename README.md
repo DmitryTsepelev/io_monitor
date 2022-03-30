@@ -52,7 +52,7 @@ Completed 200 OK in 349ms (Views: 2.1ms | ActiveRecord: 38.7ms | ActiveRecord Pa
 If you want to inspect payload sizes, check out payload data for the `process_action.action_controller` event:
 
 ```ruby
-ActiveSupport::Notifications.subscribe(process_action.action_controller) do |name, start, finish, id, payload|
+ActiveSupport::Notifications.subscribe("process_action.action_controller") do |name, start, finish, id, payload|
   payload[:io_to_response_payload_ratio] # { active_record: 866, response: 25 }
 end
 ```

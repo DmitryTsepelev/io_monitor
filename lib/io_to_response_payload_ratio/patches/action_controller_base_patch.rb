@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "filesize"
-
 module IoToResponsePayloadRatio
   module ActionControllerBasePatch
     def log_process_action(payload)
@@ -12,7 +10,7 @@ module IoToResponsePayloadRatio
         next unless data
 
         data.each do |source, bytes|
-          size = Filesize.from(bytes.to_s).pretty
+          size = ActiveSupport::NumberHelper::number_to_human_size(bytes)
           messages << "#{source.to_s.camelize} Payload: #{size}"
         end
       end

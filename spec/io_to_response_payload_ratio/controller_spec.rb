@@ -66,8 +66,8 @@ RSpec.describe IoToResponsePayloadRatio::Controller, type: :controller do
       infos = get_info_logs { get :index }
 
       expect(infos).to include(/Completed 200 OK/)
-      expect(infos).to include(/ActiveRecord Payload: \d+\.\d+ B/)
-      expect(infos).to include(/Response Payload: \d+\.\d+ B/)
+      expect(infos).to include(/ActiveRecord Payload: \d+ Bytes/)
+      expect(infos).to include(/Response Payload: \d+ Bytes/)
     end
   end
 
