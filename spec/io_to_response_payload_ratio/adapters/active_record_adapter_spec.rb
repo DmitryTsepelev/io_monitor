@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe IoToResponsePayloadRatio::ActiveRecordAdapter do
-  subject { described_class }
-
   let(:aggregator) { IoToResponsePayloadRatio.aggregator }
 
   with_model :Fake, scope: :all do
@@ -30,12 +28,6 @@ RSpec.describe IoToResponsePayloadRatio::ActiveRecordAdapter do
     aggregator.stop!
   end
 
-  describe "::enabled?" do
-    it "is true" do
-      expect(subject.enabled?).to be true
-    end
-  end
-
   context "when aggregator is inactive" do
     before do
       aggregator.stop!
@@ -53,6 +45,6 @@ RSpec.describe IoToResponsePayloadRatio::ActiveRecordAdapter do
 
     bytesize = Fake.pluck(:id, :name).flatten.join.bytesize
 
-    expect(aggregator).to have_received(:increment).with(subject.kind, bytesize)
+    expect(aggregator).to have_received(:increment).with(described_class.kind, bytesize)
   end
 end

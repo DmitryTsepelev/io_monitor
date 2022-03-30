@@ -5,14 +5,17 @@ require "io_to_response_payload_ratio/patches/action_controller_base_patch"
 module IoToResponsePayloadRatio
   class Railtie < Rails::Railtie
     config.after_initialize do
-      IoToResponsePayloadRatio::ADAPTERS.each do |adapter|
-        adapter.initialize! if adapter.enabled?
-      end
+      IoToResponsePayloadRatio.config.adapters.each(&:initialize!)
 
       ActiveSupport.on_load(:action_controller) do
         ActionController::Base.singleton_class.prepend(ActionControllerBasePatch)
+      end
 
-        require "io_to_response_payload_ratio/notifier"
+      ActiveSupport::Notifications.subscribe("process_action.action_controller") do |*args|
+        payload = args.last[IoToResponsePayloadRatio::NAMESPACE]
+        next unless payload
+
+        IoToResponsePayloadRatio.config.publisher.process_action(payload)
       end
     end
   end

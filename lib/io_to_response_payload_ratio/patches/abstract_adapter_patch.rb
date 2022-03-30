@@ -8,7 +8,7 @@ module IoToResponsePayloadRatio
         # but it makes a lot of unnecessary allocations.
         io_payload_size = kwargs[:rows].sum(0) do |row|
           row.sum(0) do |val|
-            (val === String ? val : val.to_s).bytesize
+            (String === val ? val : val.to_s).bytesize
           end
         end
 

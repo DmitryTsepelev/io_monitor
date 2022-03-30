@@ -57,6 +57,50 @@ ActiveSupport::Notifications.subscribe("process_action.action_controller") do |n
 end
 ```
 
+## Custom publishers
+
+Implement your custom publisher by inheriting from `BasePublisher`:
+
+```ruby
+class MyPublisher < IoToResponsePayloadRatio::BasePublisher
+  def publish(source, ratio)
+    puts "Warn threshold reched for #{source} at #{ratio}!"
+  end
+end
+```
+
+Then specify it in the configuration:
+
+```ruby
+IoToResponsePayloadRatio.configure do |config|
+  config.publish = MyPublisher.new
+end
+```
+
+## Custom adapters
+
+Implement your custom adapter by inheriting from `BaseAdapter`:
+
+```ruby
+class MyAdapter < IoToResponsePayloadRatio::BaseAdapter
+  def self.kind
+    :my_source
+  end
+
+  def initialize!
+    # Take a look at `AbstractAdapterPatch` for an example.
+  end
+end
+```
+
+Then specify it in the configuration:
+
+```ruby
+IoToResponsePayloadRatio.configure do |config|
+  config.adapters = [:active_record, MyAdapter.new]
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests.

@@ -28,10 +28,15 @@ RSpec.describe IoToResponsePayloadRatio do
   describe ".aggregator" do
     it "filters out disabled sources" do
       without_memoization(subject, :aggregator) do
-        adapter = IoToResponsePayloadRatio::ADAPTERS.first
-        allow(adapter).to receive(:enabled?).and_return(false)
+        mock_adapter = Class.new do
+          def self.kind
+            :mock_adapter
+          end
+        end
 
-        expect(subject.aggregator.sources).not_to include(adapter.kind)
+        allow(subject.config).to receive(:adapters).and_return([mock_adapter.new])
+
+        expect(subject.aggregator.sources).to contain_exactly(:mock_adapter)
       end
     end
   end
