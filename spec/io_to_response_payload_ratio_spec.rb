@@ -2,16 +2,7 @@
 
 require 'io_to_response_payload_ratio'
 require 'io_to_response_payload_ratio/extensions/active_record/extension'
-
-module ActiveRecord
-  class Base
-    establish_connection(adapter: 'sqlite3', database: ':memory:')
-    connection.create_table(:transactions) { |t| t.string :token; t.string :name; t.integer :price }
-    self.logger = Logger.new(::LOGGER = StringIO.new)
-  end
-end
-
-class Transaction < ActiveRecord::Base; end
+require_relative './fake/active_record_transaction'
 
 RSpec.describe IoToResponsePayloadRatio do
   describe ActiveRecord::LogSubscriber do

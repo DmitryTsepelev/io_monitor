@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'active_record'
-require 'active_support'
+require "active_record"
+require "active_support"
 require "io_to_response_payload_ratio"
 
 RSpec.configure do |config|
