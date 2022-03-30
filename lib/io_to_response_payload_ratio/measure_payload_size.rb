@@ -23,7 +23,7 @@ module IoToResponsePayloadRatio
     end
 
     def payload_size_in_kb
-      (payload_bytes / 1024).to_f
+      (payload_bytes.to_f / 1024).round(2)
     end
   end
 
