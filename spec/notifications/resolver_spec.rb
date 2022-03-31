@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'io_to_response_payload_ratio'
-require 'io_to_response_payload_ratio/notifications/logs'
-require 'io_to_response_payload_ratio/notifications/instrumentation'
+require "io_to_response_payload_ratio"
+require "io_to_response_payload_ratio/notifications/logs"
+require "io_to_response_payload_ratio/notifications/instrumentation"
 
 module Rails
   def self.logger
@@ -11,9 +11,9 @@ module Rails
 end
 
 RSpec.describe IoToResponsePayloadRatio::Notifications::Resolver do
-  context 'when ratio less than configuration.warn_threshold' do
+  context "when ratio less than configuration.warn_threshold" do
     let(:content) do
-      { payload: { controller: 'FakeController' }, ratio: 0.5 }
+      {payload: {controller: "FakeController"}, ratio: 0.5}
     end
 
     let(:notification_log) do
@@ -24,7 +24,7 @@ RSpec.describe IoToResponsePayloadRatio::Notifications::Resolver do
       IoToResponsePayloadRatio::Notifications::Instrumentation
     end
 
-    it 'calls Notifications::Logs with ratio_message' do
+    it "calls Notifications::Logs with ratio_message" do
       IoToResponsePayloadRatio.configure do |config|
         config.publish = :logs
       end
@@ -41,7 +41,7 @@ RSpec.describe IoToResponsePayloadRatio::Notifications::Resolver do
       object.call
     end
 
-    it 'calls Notifications::Instrumentation with ratio_message' do
+    it "calls Notifications::Instrumentation with ratio_message" do
       IoToResponsePayloadRatio.configure do |config|
         config.publish = :instrumentation
       end
@@ -59,12 +59,12 @@ RSpec.describe IoToResponsePayloadRatio::Notifications::Resolver do
     end
   end
 
-  context 'when ratio more or equal than configuration.warn_threshold' do
+  context "when ratio more or equal than configuration.warn_threshold" do
     let(:content) do
-      { payload: { controller: 'FakeController' }, ratio: 1.0 }
+      {payload: {controller: "FakeController"}, ratio: 1.0}
     end
 
-    it 'not calls Notifications::Logs' do
+    it "not calls Notifications::Logs" do
       IoToResponsePayloadRatio.configure do |config|
         config.publish = :logs
       end
