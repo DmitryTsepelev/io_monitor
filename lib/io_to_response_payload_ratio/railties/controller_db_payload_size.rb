@@ -5,7 +5,7 @@ require "active_record/log_subscriber"
 
 module IoToResponsePayloadRatio
   module Railties # :nodoc:
-    module ControllerDbPayloadSize #:nodoc:
+    module ControllerDbPayloadSize # :nodoc:
       extend ActiveSupport::Concern
 
       module ClassMethods # :nodoc:

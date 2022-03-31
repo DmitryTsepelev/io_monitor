@@ -25,7 +25,7 @@ module IoToResponsePayloadRatio
       end
 
       module Measure
-        IGNORE_CALLER_METHODS = ['all_versions'].freeze
+        IGNORE_CALLER_METHODS = ["all_versions"].freeze
 
         def self.prepended(cls)
           cls.prepend(Relation)
@@ -33,7 +33,7 @@ module IoToResponsePayloadRatio
         end
 
         def self.measuring_method(&block)
-          caller_method = caller_locations(2,1)[0].base_label
+          caller_method = caller_locations(2, 1)[0].base_label
 
           if !defined?(::IoToResponsePayloadRatio::MeasurePayloadSize) || IGNORE_CALLER_METHODS.include?(caller_method)
             return block.call

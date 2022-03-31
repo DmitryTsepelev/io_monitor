@@ -10,8 +10,6 @@ module IoToResponsePayloadRatio
   class Error < StandardError; end
 
   class << self
-    attr_reader :notifications
-
     def configuration
       @configuration ||= Configuration.new
     end
@@ -33,10 +31,10 @@ module IoToResponsePayloadRatio
     def self.included(base)
       return unless base < ActionController::Base
 
-      ActiveSupport::Notifications.subscribe('process_action.action_controller') do |*args|
+      ActiveSupport::Notifications.subscribe("process_action.action_controller") do |*args|
         event = ActiveSupport::Notifications::Event.new(*args)
 
-        return if event.payload[:controller] != base.to_s
+        break if event.payload[:controller] != base.to_s
 
         Notifications::ActiveRecord::Notification.new(payload: event.payload).call
       end

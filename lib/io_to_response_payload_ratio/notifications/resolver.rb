@@ -7,8 +7,8 @@ require_relative "active_record/notification"
 module IoToResponsePayloadRatio
   module Notifications
     class Resolver
-      INSTRUMENT_NAME = 'ratio'
-      MESSAGE = 'I/O to response payload ratio is _ratio_, while threshold is _threshold_'
+      INSTRUMENT_NAME = "ratio"
+      MESSAGE = "I/O to response payload ratio is _ratio_, while threshold is _threshold_"
 
       attr_reader :payload, :ratio, :configuration
 
@@ -39,7 +39,7 @@ module IoToResponsePayloadRatio
       end
 
       def build_message
-        MESSAGE.gsub(/_ratio_|_threshold_/, '_ratio_' => ratio, '_threshold_' => configuration.warn_threshold)
+        MESSAGE.gsub(/_ratio_|_threshold_/, "_ratio_" => ratio, "_threshold_" => configuration.warn_threshold)
       end
     end
   end

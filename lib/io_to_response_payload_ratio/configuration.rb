@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require_relative 'notifications/base'
-require_relative 'notifications/logs'
-require_relative 'notifications/instrumentation'
+require_relative "notifications/base"
+require_relative "notifications/logs"
+require_relative "notifications/instrumentation"
 
 module IoToResponsePayloadRatio
   class Configuration
-    attr_reader :available_notifications
-    attr_accessor :publish, :warn_threshold
+    attr_reader :available_notifications, :warn_threshold
+    attr_accessor :publish
 
     DEFAULT_NOTIFICATIONS = {
       logs: Notifications::Logs,
-      instrumentation: Notifications::Instrumentation,
+      instrumentation: Notifications::Instrumentation
     }.freeze
 
     DEFAULT_NOTIFICATION = :logs

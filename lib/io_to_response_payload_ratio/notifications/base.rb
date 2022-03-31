@@ -3,8 +3,8 @@
 module IoToResponsePayloadRatio
   module Notifications
     class Base
-      INSTRUMENT_NAME = 'ratio'
-      MESSAGE = 'I/O to response payload ratio is __ratio__, while threshold is __config_ratio__'
+      INSTRUMENT_NAME = "ratio"
+      MESSAGE = "I/O to response payload ratio is __ratio__, while threshold is __config_ratio__"
 
       attr_reader :payload, :ratio, :configuration
 

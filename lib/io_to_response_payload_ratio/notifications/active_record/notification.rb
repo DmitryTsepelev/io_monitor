@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../resolver"
-require_relative '../../ratio/calculate'
+require_relative "../../ratio/calculate"
 
 module IoToResponsePayloadRatio
   module Notifications
