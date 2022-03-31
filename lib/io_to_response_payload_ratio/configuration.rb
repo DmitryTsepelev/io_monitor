@@ -21,7 +21,7 @@ module IoToResponsePayloadRatio
     def initialize
       @publish = :logs
       @warn_threshold = 1.0
-      @available_notifications = DEFAULT_NOTIFICATIONS
+      @available_notifications = DEFAULT_NOTIFICATIONS.dup
     end
 
     def warn_threshold=(value)
@@ -43,7 +43,7 @@ module IoToResponsePayloadRatio
       notifications.each do |key, performer_class|
         key = key.to_sym
 
-        next if @available_notifications.key?(key) || !performer_class < Notifications::Base
+        next if @available_notifications.key?(key) || !(performer_class < Notifications::Base)
 
         @available_notifications[key] = performer_class
       end
