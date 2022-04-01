@@ -112,3 +112,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/Dmitry
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+## Credits
+
+Thanks to [@prog-supdex](https://github.com/prog-supdex) and [@maxshend](https://github.com/maxshend) for building the initial implementations (see [PR#2](https://github.com/DmitryTsepelev/io_to_response_payload_ratio/pull/2) and [PR#3](https://github.com/DmitryTsepelev/io_to_response_payload_ratio/pull/3)).

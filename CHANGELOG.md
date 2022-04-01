@@ -1,5 +1,9 @@
-## [Unreleased]
+# Change log
 
-## [0.1.0] - 2022-02-17
+## main
 
-- Initial release
+- [PR#2](https://github.com/DmitryTsepelev/io_to_response_payload_ratio/pull/2), [PR#3](https://github.com/DmitryTsepelev/io_to_response_payload_ratio/pull/3), [PR#4](https://github.com/DmitryTsepelev/io_to_response_payload_ratio/pull/4) Initial implementation ([@prog-supdex], [@maxshend], [@baygeldin])
+
+[@baygeldin]: https://github.com/baygeldin
+[@prog-supdex]: https://github.com/prog-supdex
+[@maxshend]: https://github.com/maxshend
