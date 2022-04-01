@@ -5,10 +5,10 @@ require_relative "lib/io_to_response_payload_ratio/version"
 Gem::Specification.new do |spec|
   spec.name = "io_to_response_payload_ratio"
   spec.version = IoToResponsePayloadRatio::VERSION
-  spec.authors = ["DmitryTsepelev"]
+  spec.authors = ["baygeldin", "prog-supdex", "maxshend", "DmitryTsepelev"]
   spec.email = ["dmitry.a.tsepelev@gmail.com"]
   spec.homepage = "https://github.com/DmitryTsepelev/io_to_response_payload_ratio"
-  spec.summary = "Will add later."
+  spec.summary = "A gem that helps to detect potential memory bloats"
 
   spec.license = "MIT"
 
