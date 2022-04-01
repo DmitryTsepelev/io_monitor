@@ -7,5 +7,14 @@
 /spec/reports/
 /tmp/
 
-# rspec failure tracking
+spec/dummy/db/*.sqlite3
+spec/dummy/db/*.sqlite3-journal
+spec/dummy/log/*.log
+spec/dummy/tmp/
+
 .rspec_status
+
+Gemfile.lock
+.ruby-version
+.ruby-gemset
+.tool-versions
