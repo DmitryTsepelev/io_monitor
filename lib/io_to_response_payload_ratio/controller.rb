@@ -5,7 +5,6 @@ module IoToResponsePayloadRatio
     extend ActiveSupport::Concern
 
     def process_action(*)
-      IoToResponsePayloadRatio.aggregator.reset!
       IoToResponsePayloadRatio.aggregator.start!
 
       super

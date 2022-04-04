@@ -25,17 +25,6 @@ RSpec.describe IoToResponsePayloadRatio::Aggregator do
     end
   end
 
-  describe ".reset!" do
-    it "nullifies the state" do
-      aggregator.start!
-      aggregator.increment(sources.first, 42)
-      aggregator.stop!
-      aggregator.reset!
-
-      expect(aggregator.get(sources.first)).to eq(0)
-    end
-  end
-
   describe ".increment" do
     it "increments the specified source value" do
       aggregator.start!
@@ -66,7 +55,6 @@ RSpec.describe IoToResponsePayloadRatio::Aggregator do
 
     Thread.new do
       aggregator.start!
-      aggregator.reset!
 
       expect(aggregator.get(sources.first)).to eq(0)
       expect(aggregator.active?).to be true
