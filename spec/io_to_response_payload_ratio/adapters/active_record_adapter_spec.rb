@@ -20,7 +20,6 @@ RSpec.describe IoToResponsePayloadRatio::ActiveRecordAdapter do
   end
 
   before do
-    aggregator.reset!
     aggregator.start!
   end
 
