@@ -21,12 +21,16 @@ RSpec.configure do |config|
   config.extend WithModel
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.around(:each) do |example|
-    DatabaseCleaner.cleaning { example.run }
+  config.before(:each) do |e|
+    DatabaseCleaner.strategy = e.metadata[:skip_transaction] ? :truncation : :transaction
+    DatabaseCleaner.start
+  end
+
+  config.append_after(:each) do
+    DatabaseCleaner.clean
   end
 
   config.expect_with :rspec do |c|

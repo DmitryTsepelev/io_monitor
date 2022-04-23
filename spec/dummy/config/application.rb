@@ -16,5 +16,9 @@ module Dummy
     config.logger = Logger.new("/dev/null")
     config.api_only = true
     config.active_record.legacy_connection_handling = false
+
+    if Rails::VERSION::MAJOR >= 7
+      config.active_record.async_query_executor = :global_thread_pool
+    end
   end
 end
