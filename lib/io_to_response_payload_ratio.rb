@@ -7,6 +7,7 @@ require "io_to_response_payload_ratio/controller"
 
 require "io_to_response_payload_ratio/adapters/base_adapter"
 require "io_to_response_payload_ratio/adapters/active_record_adapter"
+require "io_to_response_payload_ratio/adapters/net_http_adapter"
 
 require "io_to_response_payload_ratio/publishers/base_publisher"
 require "io_to_response_payload_ratio/publishers/logs_publisher"
@@ -16,7 +17,7 @@ require "io_to_response_payload_ratio/railtie"
 
 module IoToResponsePayloadRatio
   NAMESPACE = :io_to_response_payload_ratio
-  ADAPTERS = [ActiveRecordAdapter].freeze
+  ADAPTERS = [ActiveRecordAdapter, NetHttpAdapter].freeze
   PUBLISHERS = [LogsPublisher, NotificationsPublisher].freeze
 
   class << self
