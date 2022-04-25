@@ -2,7 +2,7 @@
 
 module IoToResponsePayloadRatio
   module NetHttpAdapterPatch
-    def request(*args, **kwargs, &block)
+    def request(*args, &block)
       super do |response|
         if response.body && IoToResponsePayloadRatio.aggregator.active?
           IoToResponsePayloadRatio.aggregator.increment(NetHttpAdapter.kind, response.body.bytesize)
