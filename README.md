@@ -26,6 +26,7 @@ Change configuration in an initializer if you need:
 IoToResponsePayloadRatio.configure do |config|
   config.publish = :notifications # defaults to :logs
   config.warn_threshold = 0.8 # defaults to 0
+  config.adapters = [:active_record, :net_http] # defaults to [:active_record]
 end
 ```
 
