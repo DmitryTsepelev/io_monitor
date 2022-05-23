@@ -1,4 +1,4 @@
-IoToResponsePayloadRatio.configure do |config|
+IoMonitor.configure do |config|
   # Enable all available adapters for testing purposes.
-  config.adapters = IoToResponsePayloadRatio::ADAPTERS.map(&:new)
+  config.adapters = IoMonitor::ADAPTERS.map(&:new)
 end

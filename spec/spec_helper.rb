@@ -10,7 +10,7 @@ require_relative "dummy/config/environment"
 
 require "rspec/rails"
 
-require "io_to_response_payload_ratio"
+require "io_monitor"
 
 RSpec.configure do |config|
   # For proper work of ActiveSupport::CurrentAttributes reset
