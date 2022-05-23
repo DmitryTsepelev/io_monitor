@@ -2,6 +2,8 @@
 
 ## main
 
+## 0.1.0 (2022-05-24)
+
 - [PR#7](https://github.com/DmitryTsepelev/io_monitor/pull/7) Add HTTP adapter ([@maxshend])
 - [PR#6](https://github.com/DmitryTsepelev/io_monitor/pull/6) Add support for ActiveRecord::Relation#load_async method ([@maxshend])
 - [PR#5](https://github.com/DmitryTsepelev/io_monitor/pull/5) Use ActiveSupport::CurrentAttributes to store input payload ([@maxshend])
