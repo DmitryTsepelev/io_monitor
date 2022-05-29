@@ -2,6 +2,8 @@
 
 ## main
 
+- [PR#8](https://github.com/DmitryTsepelev/io_monitor/pull/8) Add Redis adapter ([@DmitryTsepelev])
+
 ## 0.1.0 (2022-05-24)
 
 - [PR#7](https://github.com/DmitryTsepelev/io_monitor/pull/7) Add HTTP adapter ([@maxshend])
@@ -12,3 +14,4 @@
 [@baygeldin]: https://github.com/baygeldin
 [@prog-supdex]: https://github.com/prog-supdex
 [@maxshend]: https://github.com/maxshend
+[@DmitryTsepelev]: https://github.com/DmitryTsepelev

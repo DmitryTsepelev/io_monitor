@@ -17,7 +17,15 @@ require "io_monitor/railtie"
 
 module IoMonitor
   NAMESPACE = :io_monitor
-  ADAPTERS = [ActiveRecordAdapter, NetHttpAdapter].freeze
+
+  adapters = [ActiveRecordAdapter, NetHttpAdapter]
+
+  if defined? Redis
+    require "io_monitor/adapters/redis_adapter"
+    adapters << RedisAdapter
+  end
+  ADAPTERS = adapters.freeze
+
   PUBLISHERS = [LogsPublisher, NotificationsPublisher].freeze
 
   class << self

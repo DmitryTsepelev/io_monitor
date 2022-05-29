@@ -6,6 +6,7 @@ SimpleCov.start if ENV["COVERAGE"]
 
 ENV["RAILS_ENV"] = "test"
 
+require "redis"
 require_relative "dummy/config/environment"
 
 require "rspec/rails"
