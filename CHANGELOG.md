@@ -2,6 +2,8 @@
 
 ## main
 
+## 0.2.0 (2022-05-29)
+
 - [PR#8](https://github.com/DmitryTsepelev/io_monitor/pull/8) Add Redis adapter ([@DmitryTsepelev])
 
 ## 0.1.0 (2022-05-24)
