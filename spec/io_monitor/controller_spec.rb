@@ -98,4 +98,38 @@ RSpec.describe IoMonitor::Controller, type: :controller do
       expect(infos).not_to include(/Response Payload:/)
     end
   end
+
+  context "when monitor_io_for is configured" do
+    controller(ApplicationController) do
+      include IoMonitor::Controller
+
+      monitor_io_for :index
+
+      def index
+        render json: Fake.all
+      end
+
+      def show
+        render json: Fake.first
+      end
+    end
+
+    it "adds info to ActionController log entry" do
+      infos = get_info_logs { get :index }
+
+      expect(infos).to include(/Completed 200 OK/)
+      expect(infos).to include(/ActiveRecord Payload: \d+ Bytes/)
+      expect(infos).to include(/Response Payload: \d+ Bytes/)
+    end
+
+    context "when action is not included to the list of monitored ones" do
+      it "doesn't modify ActionController log entry" do
+        infos = get_info_logs { get :show, params: {id: 1} }
+
+        expect(infos).to include(/Completed 200 OK/)
+        expect(infos).not_to include(/ActiveRecord Payload:/)
+        expect(infos).not_to include(/Response Payload:/)
+      end
+    end
+  end
 end

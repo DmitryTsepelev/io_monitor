@@ -68,6 +68,18 @@ ActiveSupport::Notifications.subscribe("process_action.action_controller") do |n
 end
 ```
 
+## Per–action monitoring
+
+Since this approach can lead to false–positives or other things you don't want or cannot fix, there is a way to configure monitoring only for specific actions:
+
+```ruby
+class MyController < ApplicationController
+  include IoMonitor::Controller
+
+  monitor_io_for :index, :show
+end
+```
+
 ## Custom publishers
 
 Implement your custom publisher by inheriting from `BasePublisher`:
