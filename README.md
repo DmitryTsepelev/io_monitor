@@ -1,5 +1,8 @@
 # IoMonitor
 
+[![Gem Version](https://badge.fury.io/rb/io_monitor.svg)](https://rubygems.org/gems/io_monitor)
+[![Tests status](https://github.com/DmitryTsepelev/io_monitor/actions/workflows/test.yml/badge.svg)](https://github.com/DmitryTsepelev/io_monitor/actions/workflows/test.yml)
+
 A gem that helps to detect potential memory bloats.
 
 When your controller loads a lot of data to the memory but returns a small response to the client it might mean that you're using the IO in the non–optimal way. In this case, you'll see the following message in your logs:
