@@ -2,6 +2,8 @@
 
 ## main
 
+- [PR#9](https://github.com/DmitryTsepelev/io_monitor/pull/9) Restrict minimum Rails version to 6.1, adjust test matrix, and related changes ([@Envek])
+
 ## 0.2.0 (2022-05-29)
 
 - [PR#8](https://github.com/DmitryTsepelev/io_monitor/pull/8) Add Redis adapter ([@DmitryTsepelev])
@@ -17,3 +19,4 @@
 [@prog-supdex]: https://github.com/prog-supdex
 [@maxshend]: https://github.com/maxshend
 [@DmitryTsepelev]: https://github.com/DmitryTsepelev
+[@Envek]: https://github.com/Envek
