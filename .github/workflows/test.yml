@@ -1,0 +1,36 @@
+name: Tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - 'v*'
+
+jobs:
+  test:
+    name: 'Rails ${{ matrix.rails }} × Ruby ${{ matrix.ruby }}'
+    # Skip running tests for local pull requests (use push event instead), run only for foreign ones
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.owner.login != github.event.pull_request.base.repo.owner.login
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - ruby:  "3.1"
+            rails: "HEAD"
+          - ruby:  "3.0"
+            rails: "7.0"
+          - ruby:  "2.5"
+            rails: "6.1"
+    env:
+      RAILS_VERSION: ${{ matrix.rails }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+        bundler-cache: true
+    - name: Run specs
+      run: bundle exec rake spec
