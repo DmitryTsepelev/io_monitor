@@ -31,7 +31,6 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = ">= 2.6.0"
 
-  rails_version = ENV["RAILS_VERSION"] || ">= 6.0"
-  spec.add_dependency "rails", rails_version
+  spec.add_dependency "rails", ">= 6.1"
   spec.add_development_dependency "redis", ">= 4.0"
 end
