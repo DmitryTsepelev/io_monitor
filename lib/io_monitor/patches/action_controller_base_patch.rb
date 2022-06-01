@@ -4,7 +4,7 @@ module IoMonitor
   module ActionControllerBasePatch
     def log_process_action(payload)
       super.tap do |messages|
-        next unless IoMonitor.config.publisher.is_a?(LogsPublisher)
+        next unless IoMonitor.config.publishers.any? { |publisher| publisher.is_a?(LogsPublisher) }
 
         data = payload[IoMonitor::NAMESPACE]
         next unless data

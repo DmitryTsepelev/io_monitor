@@ -15,7 +15,7 @@ module IoMonitor
         payload = args.last[IoMonitor::NAMESPACE]
         next unless payload
 
-        IoMonitor.config.publisher.process_action(payload)
+        IoMonitor.config.publishers.each { |publisher| publisher.process_action(payload) }
       end
     end
   end

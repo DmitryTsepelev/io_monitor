@@ -5,22 +5,15 @@ module IoMonitor
     DEFAULT_WARN_THRESHOLD = 0.0
 
     def initialize
-      @publisher = LogsPublisher.new
+      @publishers = [LogsPublisher.new]
       @adapters = [ActiveRecordAdapter.new]
       @warn_threshold = DEFAULT_WARN_THRESHOLD
     end
 
-    attr_reader :publisher, :adapters, :warn_threshold
+    attr_reader :publishers, :adapters, :warn_threshold
 
-    def publish=(value)
-      if value.is_a?(BasePublisher)
-        @publisher = value
-      elsif (publisher_type = resolve(IoMonitor::PUBLISHERS, value))
-        @publisher = publisher_type.new
-      else
-        supported = IoMonitor::PUBLISHERS.map(&:kind)
-        raise ArgumentError, "Only the following publishers are supported: #{supported}."
-      end
+    def publish=(values)
+      @publishers = [*values].map { |value| value_to_publisher(value) }
     end
 
     def adapters=(value)
@@ -49,6 +42,17 @@ module IoMonitor
 
     def resolve(list, kind)
       list.find { |p| p.kind == kind }
+    end
+
+    def value_to_publisher(value)
+      if value.is_a?(BasePublisher)
+        value
+      elsif (publisher_type = resolve(IoMonitor::PUBLISHERS, value))
+        publisher_type.new
+      else
+        supported = IoMonitor::PUBLISHERS.map(&:kind)
+        raise ArgumentError, "Only the following publishers are supported: #{supported}."
+      end
     end
   end
 end
