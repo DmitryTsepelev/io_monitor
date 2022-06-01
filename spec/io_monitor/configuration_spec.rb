@@ -6,7 +6,7 @@ RSpec.describe IoMonitor::Configuration do
   describe ".publish" do
     it "resolves publisher by kind" do
       config.publish = :notifications
-      expect(config.publisher).to be_a(IoMonitor::NotificationsPublisher)
+      expect(config.publishers.first).to be_a(IoMonitor::NotificationsPublisher)
     end
 
     context "when kind is unknown" do
@@ -18,11 +18,19 @@ RSpec.describe IoMonitor::Configuration do
     it "allows custom publishers" do
       custom = Class.new(IoMonitor::BasePublisher) {}
       config.publish = custom.new
-      expect(config.publisher).to be_a(custom)
+      expect(config.publishers.first).to be_a(custom)
     end
 
     it "equals to :logs by default" do
-      expect(config.publisher).to be_a(IoMonitor::LogsPublisher)
+      expect(config.publishers.first).to be_a(IoMonitor::LogsPublisher)
+    end
+
+    context "when multiple publishers are set" do
+      it "assigns all publishers" do
+        config.publish = [:notifications, :logs]
+        expect(config.publishers.first).to be_a(IoMonitor::NotificationsPublisher)
+        expect(config.publishers.last).to be_a(IoMonitor::LogsPublisher)
+      end
     end
   end
 
