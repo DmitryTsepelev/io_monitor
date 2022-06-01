@@ -16,12 +16,8 @@ RSpec.describe IoMonitor::RedisAdapter do
     allow(Redis::Client).to receive(:new).and_return(redis_client)
   end
 
-  before do
-    aggregator.start!
-  end
-
-  after do
-    aggregator.stop!
+  around do |example|
+    aggregator.collect { example.run }
   end
 
   context "when aggregator is inactive" do

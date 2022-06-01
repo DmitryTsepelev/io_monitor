@@ -13,6 +13,12 @@ module IoMonitor
       InputPayload.active.present?
     end
 
+    def collect
+      start!
+      yield
+      stop!
+    end
+
     def start!
       InputPayload.active = true
     end

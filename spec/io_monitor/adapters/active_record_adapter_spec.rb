@@ -23,12 +23,8 @@ RSpec.describe IoMonitor::ActiveRecordAdapter do
     Fake.delete_all
   end
 
-  before do
-    aggregator.start!
-  end
-
-  after do
-    aggregator.stop!
+  around do |example|
+    aggregator.collect { example.run }
   end
 
   describe "without async queries" do

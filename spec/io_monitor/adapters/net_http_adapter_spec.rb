@@ -9,12 +9,8 @@ RSpec.describe IoMonitor::NetHttpAdapter do
     stub_request(:get, url).to_return body: body
   end
 
-  before do
-    aggregator.start!
-  end
-
-  after do
-    aggregator.stop!
+  around do |example|
+    aggregator.collect { example.run }
   end
 
   context "when aggregator is inactive" do
