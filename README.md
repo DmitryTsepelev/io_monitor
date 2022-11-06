@@ -2,6 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/io_monitor.svg)](https://rubygems.org/gems/io_monitor)
 [![Tests status](https://github.com/DmitryTsepelev/io_monitor/actions/workflows/test.yml/badge.svg)](https://github.com/DmitryTsepelev/io_monitor/actions/workflows/test.yml)
+![](https://ruby-gem-downloads-badge.herokuapp.com/io_monitor?type=total)
 
 A gem that helps to detect potential memory bloats.
 
@@ -10,15 +11,6 @@ When your controller loads a lot of data to the memory but returns a small respo
 ```
 Completed 200 OK in 349ms (Views: 2.1ms | ActiveRecord: 38.7ms | ActiveRecord Payload: 866.00 B | Response Payload: 25.00 B | Allocations: 72304)
 ```
-
-<p align="center">
-  <a href="https://evilmartians.com/?utm_source=io_monitor">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="https://evilmartians.com/badges/sponsored-by-evil-martians_v2.0_for-dark-bg@2x.png">
-        <img src="https://evilmartians.com/badges/sponsored-by-evil-martians_v2.0@2x.png" alt="Sponsored by Evil Martians" width="236" height="54">
-      </picture>
-  </a>
-</p>
 
 ## Usage
 
@@ -127,6 +119,10 @@ end
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests.
+
+## Credits
+
+Initially sponsored by [Evil Martians](http://evilmartians.com).
 
 ## Contributing
 
