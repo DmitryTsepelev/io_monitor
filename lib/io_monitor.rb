@@ -12,6 +12,7 @@ require "io_monitor/adapters/net_http_adapter"
 require "io_monitor/publishers/base_publisher"
 require "io_monitor/publishers/logs_publisher"
 require "io_monitor/publishers/notifications_publisher"
+require "io_monitor/publishers/prometheus_publisher"
 
 require "io_monitor/railtie"
 
@@ -26,7 +27,7 @@ module IoMonitor
   end
   ADAPTERS = adapters.freeze
 
-  PUBLISHERS = [LogsPublisher, NotificationsPublisher].freeze
+  PUBLISHERS = [LogsPublisher, NotificationsPublisher, PrometheusPublisher].freeze
 
   class << self
     def aggregator

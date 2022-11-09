@@ -26,7 +26,7 @@ Change configuration in an initializer if you need:
 
 ```ruby
 IoMonitor.configure do |config|
-  config.publish = [:logs, :notifications] # defaults to :logs
+  config.publish = [:logs, :notifications, :prometheus] # defaults to :logs
   config.warn_threshold = 0.8 # defaults to 0
   config.adapters = [:active_record, :net_http, :redis] # defaults to [:active_record]
 end
@@ -44,6 +44,31 @@ Depending on configuration when IO payload size to response payload size ratio r
 
 ```
 ActiveRecord I/O to response payload ratio is 0.1, while threshold is 0.8
+```
+Prometheus metrics example:
+```
+...
+# TYPE io_monitor_ratio histogram
+# HELP io_monitor_ratio IO payload size to response payload size ratio
+io_monitor_ratio_bucket{adapter="active_record",le="0.01"} 0.0
+io_monitor_ratio_bucket{adapter="active_record",le="5"} 2.0
+io_monitor_ratio_bucket{adapter="active_record",le="10"} 2.0
+io_monitor_ratio_bucket{adapter="active_record",le="+Inf"} 2.0
+io_monitor_ratio_sum{adapter="active_record"} 0.15779381908414167
+io_monitor_ratio_count{adapter="active_record"} 2.0
+...
+```
+If you want to customize Prometheus publisher you can pass it as object:
+```ruby
+IoMonitor.configure do |config|
+  config.publish = [
+    IoMonitor::PrometheusPublisher.new(
+      registry: custom_registry, # defaults to Prometheus::Client.registry
+      aggregation: :max, # defaults to nil
+      buckets: [0.1, 5, 10] # defaults to Prometheus::Client::Histogram::DEFAULT_BUCKETS
+    )
+  ]
+end
 ```
 
 In addition, if `publish` is set to logs, additional data will be logged on each request:

@@ -33,4 +33,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "rails", ">= 6.1"
   spec.add_development_dependency "redis", ">= 4.0"
+  spec.add_development_dependency "prometheus-client"
 end
