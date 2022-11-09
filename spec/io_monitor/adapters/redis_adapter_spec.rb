@@ -12,7 +12,7 @@ RSpec.describe IoMonitor::RedisAdapter do
   let(:redis) { Redis.new }
 
   before do
-    allow(redis_client).to receive(:call).and_return(value)
+    allow(redis_client).to receive(:call_v).and_return(value)
     allow(Redis::Client).to receive(:new).and_return(redis_client)
   end
 
@@ -39,7 +39,7 @@ RSpec.describe IoMonitor::RedisAdapter do
 
   context "when response is QUEUED" do
     before do
-      allow(redis_client).to receive(:call).and_return("QUEUED")
+      allow(redis_client).to receive(:call_v).and_return("QUEUED")
     end
 
     it "does nothing" do
@@ -50,7 +50,7 @@ RSpec.describe IoMonitor::RedisAdapter do
 
   context "when response is error" do
     before do
-      allow(redis_client).to receive(:call).and_return(Redis::CommandError.new("ERROR"))
+      allow(redis_client).to receive(:call_v).and_return(Redis::CommandError.new("ERROR"))
     end
 
     it "does nothing" do
