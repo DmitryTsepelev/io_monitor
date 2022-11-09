@@ -1,5 +1,7 @@
 # Change log
 
+- [PR#17](https://github.com/DmitryTsepelev/io_monitor/pull/17) Prometheus publisher ([@maxshend])
+
 ## main
 
 - [PR#10](https://github.com/DmitryTsepelev/io_monitor/pull/10) Per–action monitoring ([@DmitryTsepelev])
