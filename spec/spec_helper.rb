@@ -22,17 +22,21 @@ RSpec.configure do |config|
 
   config.extend WithModel
 
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-  end
+  if Rails::VERSION::MAJOR >= 7
+    config.use_transactional_fixtures = true
+  else
+    config.before(:suite) do
+      DatabaseCleaner.clean_with(:truncation)
+    end
 
-  config.before(:each) do |e|
-    DatabaseCleaner.strategy = e.metadata[:skip_transaction] ? :truncation : :transaction
-    DatabaseCleaner.start
-  end
+    config.before(:each) do |e|
+      DatabaseCleaner.strategy = e.metadata[:skip_transaction] ? :truncation : :transaction
+      DatabaseCleaner.start
+    end
 
-  config.append_after(:each) do
-    DatabaseCleaner.clean
+    config.append_after(:each) do
+      DatabaseCleaner.clean
+    end
   end
 
   config.expect_with :rspec do |c|
