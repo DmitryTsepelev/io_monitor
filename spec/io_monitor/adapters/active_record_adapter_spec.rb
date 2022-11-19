@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "../../support/helpers/async_helper"
-
 RSpec.describe IoMonitor::ActiveRecordAdapter do
-  include Helpers::AsyncHelper
-
   let(:aggregator) { IoMonitor.aggregator }
 
   with_model :Fake, scope: :all do
@@ -56,11 +52,9 @@ RSpec.describe IoMonitor::ActiveRecordAdapter do
       it "increments aggregator by query result's bytesize", skip_transaction: true do
         allow(aggregator).to receive(:increment)
 
-        relation = Fake.all.load_async
-        wait_for_async_query(relation)
-        relation.to_a
-
-        expect(aggregator).to have_received(:increment).with(described_class.kind, bytesize)
+        Fake.all.load_async.then do
+          expect(aggregator).to have_received(:increment).with(described_class.kind, bytesize)
+        end
       end
     end
   end

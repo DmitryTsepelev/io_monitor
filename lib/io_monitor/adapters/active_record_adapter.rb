@@ -17,7 +17,7 @@ module IoMonitor
         # but it makes a lot of unnecessary allocations.
         io_payload_size = rows.sum(0) do |row|
           row.sum(0) do |val|
-            (String === val ? val : val.to_s).bytesize
+            ((String === val) ? val : val.to_s).bytesize
           end
         end
 
