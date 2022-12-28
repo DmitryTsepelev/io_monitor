@@ -18,11 +18,17 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - ruby:  "3.2"
+            rails: "HEAD"
           - ruby:  "3.1"
             rails: "HEAD"
+          - ruby:  "3.2"
+            rails: "7.0"
+          - ruby:  "3.1"
+            rails: "7.0"
           - ruby:  "3.0"
             rails: "7.0"
-          - ruby:  "2.5"
+          - ruby:  "2.7"
             rails: "6.1"
     env:
       RAILS_VERSION: ${{ matrix.rails }}
