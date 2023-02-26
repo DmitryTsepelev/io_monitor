@@ -1,5 +1,6 @@
 # Change log
 
+- [PR#22](https://github.com/DmitryTsepelev/io_monitor/pull/22) Handle zero payload ([@DmitryTsepelev])
 - [PR#17](https://github.com/DmitryTsepelev/io_monitor/pull/17) Prometheus publisher ([@maxshend])
 
 ## main

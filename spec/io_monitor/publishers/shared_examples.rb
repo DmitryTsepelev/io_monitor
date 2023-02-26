@@ -52,6 +52,17 @@ RSpec.shared_examples "publisher" do |parameter|
 
         publisher.process_action(payload)
       end
+
+      context "when io_payload_size is zero" do
+        let(:io_payload_size) { 0 }
+        let(:ratio) { 0 }
+
+        it "calls .publish method with source and ratio" do
+          expect(publisher).to receive(:publish).with(io_kind, ratio)
+
+          publisher.process_action(payload)
+        end
+      end
     end
   end
 end

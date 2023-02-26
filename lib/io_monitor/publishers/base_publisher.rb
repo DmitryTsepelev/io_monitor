@@ -16,15 +16,15 @@ module IoMonitor
       (payload.keys - [:response]).each do |source|
         ratio = ratio(payload[:response], payload[source])
 
-        if ratio < IoMonitor.config.warn_threshold
-          publish(source, ratio)
-        end
+        publish(source, ratio) if ratio < IoMonitor.config.warn_threshold
       end
     end
 
     private
 
     def ratio(response_size, io_size)
+      return 0 if io_size.to_f.zero?
+
       response_size.to_f / io_size.to_f
     end
   end
