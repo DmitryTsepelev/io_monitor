@@ -1,10 +1,11 @@
 # Change log
 
-- [PR#22](https://github.com/DmitryTsepelev/io_monitor/pull/22) Handle zero payload ([@DmitryTsepelev])
-- [PR#17](https://github.com/DmitryTsepelev/io_monitor/pull/17) Prometheus publisher ([@maxshend])
-
 ## main
 
+## 1.0.0 (2023-05-06)
+
+- [PR#22](https://github.com/DmitryTsepelev/io_monitor/pull/22) Handle zero payload ([@DmitryTsepelev])
+- [PR#17](https://github.com/DmitryTsepelev/io_monitor/pull/17) Prometheus publisher ([@maxshend])
 - [PR#10](https://github.com/DmitryTsepelev/io_monitor/pull/10) Per–action monitoring ([@DmitryTsepelev])
 - [PR#15](https://github.com/DmitryTsepelev/io_monitor/pull/15) Allow configure more than one publisher ([@DmitryTsepelev])
 - [PR#9](https://github.com/DmitryTsepelev/io_monitor/pull/9) Restrict minimum Rails version to 6.1, adjust test matrix, and related changes ([@Envek])
