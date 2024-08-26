@@ -12,6 +12,8 @@ When your controller loads a lot of data to the memory but returns a small respo
 Completed 200 OK in 349ms (Views: 2.1ms | ActiveRecord: 38.7ms | ActiveRecord Payload: 866.00 B | Response Payload: 25.00 B | Allocations: 72304)
 ```
 
+You can support my open–source work [here](https://boosty.to/dmitry_tsepelev).
+
 ## Usage
 
 Add this line to your application's Gemfile:
