@@ -135,7 +135,7 @@ RSpec.describe IoMonitor::Controller, type: :controller do
 end
 
 RSpec.describe "when response is nil", type: :request do
-  pending "does not fail" do
+  it "does not fail" do
     get "/fake"
 
     expect(response).to be_not_found
