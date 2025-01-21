@@ -2,6 +2,8 @@
 
 ## main
 
+## 1.1.0 (2025-01-21)
+
 - [PR#23](https://github.com/DmitryTsepelev/io_monitor/pull/23) Fix net/http adapter and an issue with nil responses ([@SSDany])
 
 ## 1.0.0 (2023-05-06)
