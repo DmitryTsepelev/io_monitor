@@ -2,6 +2,8 @@
 
 ## main
 
+- [PR#23](https://github.com/DmitryTsepelev/io_monitor/pull/23) Fix net/http adapter and an issue with nil responses ([@SSDany])
+
 ## 1.0.0 (2023-05-06)
 
 - [PR#22](https://github.com/DmitryTsepelev/io_monitor/pull/22) Handle zero payload ([@DmitryTsepelev])
@@ -26,3 +28,4 @@
 [@maxshend]: https://github.com/maxshend
 [@DmitryTsepelev]: https://github.com/DmitryTsepelev
 [@Envek]: https://github.com/Envek
+[@SSDany]: https://github.com/SSDany
