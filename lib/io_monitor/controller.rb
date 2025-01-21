@@ -37,7 +37,7 @@ module IoMonitor
         data[source] = aggregator.get(source)
       end
 
-      data[:response] = payload[:response].body.bytesize
+      data[:response] = payload[:response]&.body&.bytesize || 0
     end
 
     private
